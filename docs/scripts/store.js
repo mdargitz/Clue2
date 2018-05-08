@@ -7,14 +7,14 @@ const store = (function(){
     charaCreate: function (name) {
       console.log('making person');
       let humanPlayer = {
-        name: name,
+        "name": name,
         murderer: false,
         alive: true,
         npc: false,
-        potentialVictim: false
+        potentialVictim: true
       };
       console.log(humanPlayer);
-       store.potentialVictims.humanPlayer = humanPlayer;
+       store.allPlayers.push(humanPlayer);
     },
     allPlayers: [
       { name: 'butler',
@@ -43,6 +43,8 @@ const store = (function(){
         potentialVictim: true,
       }
     ],
+    deadPlayers: [],
+    namesoftheDead: '',
 
   
 

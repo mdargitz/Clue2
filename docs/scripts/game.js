@@ -19,10 +19,11 @@ const game = (function(){
     console.log(`Shhh...${NPCs[murdererNumber].name} is a murderer!`);
 
     NPCs.splice(murdererNumber, 1);
-    console.log(NPCs);  
-  
+    
     let victimNumber = Math.floor(Math.random() * (NPCs.length));
     NPCs[victimNumber].alive = false;
+    store.deadPlayers.push(NPCs[victimNumber]);
+    store.namesoftheDead = NPCs[victimNumber].name;
     console.log(`Oh no, ${NPCs[victimNumber].name} has died!`);
   };
 
@@ -46,7 +47,8 @@ const game = (function(){
 
   const generatePrompt = (id) => {
     //get the prompt data from the api
-    const fakePromptData = 'Once upon a time there was an app';
+    console.log(store.namesoftheDead);
+    const fakePromptData = `Once upon a time there was an app, in which ${store.namesoftheDead} died by murder!`;
     return `
     <div>
       <h1>Prompt ${id} : Greetings ${store.playerName}</h1>
@@ -95,9 +97,7 @@ const game = (function(){
       event.preventDefault();
       store.playerName = $('#characterName').val();
       store.charaCreate($('#characterName').val());
-      console.log(store.characters);
       //TO DO get full NPC list from the API
-      store.survivingCharas = ['joe','jane','the butler','fourth wall breaker?'];
       store.beginning = false;
       render();
     });
