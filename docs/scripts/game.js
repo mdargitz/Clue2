@@ -4,48 +4,28 @@ console.log('what up?');
 
 const game = (function(){
   
-
-  
   const setMurderer = () => {
-    //TODO make this random, give it some sort of logic based on prompts?
-   
-    let possibleMurderers = [];
-    let possibleVictims = [];
-    //get a random number
-
-    //loop over the characterObjs. If property NPC = true, push to array PotentialMurderers;
-    //Set property murderer = true for nth character in array as chosen randomly & potentialVictim to false
+    let NPCs = [];
 
     store.allPlayers.forEach( player => {
-      // console.log(player);
       if (player.npc === true){
-        possibleMurderers.push(player);
+        NPCs.push(player);
       }
     });
 
-    console.log(possibleMurderers);
+    let murdererNumber = Math.floor(Math.random() * (NPCs.length));
 
- 
-    let murdererNumber = Math.floor(Math.random() * (possibleMurderers.length));
+    NPCs[murdererNumber].murderer = true;
+    console.log(`Shhh...${NPCs[murdererNumber].name} is a murderer!`);
 
-console.log(murdererNumber);
-
-    possibleMurderers[murdererNumber].murderer = true;
-    console.log(`Shhh...${possibleMurderers[murdererNumber].name} is a murderer!`);
-    console.log(possibleMurderers);
-    // possibleMurderers[murdererNumber].potentialVictim = false;
-
-    // for (var obj in store.allPlayers) {
-    //   console.log( typeof obj, obj);
-    //   if (obj[npc] === true && this.potentialVictim === true){
-    //     possibleVictims.push(this);
-    //   }
-    // }
-
-    let victimNumber = Math.floor(Math.random() * (possibleVictims.length));
-    // possibleVictims[victimNumber].alive = false;
-    console.log(`Oh no, ${possibleVictims[victimNumber]} has died!`);
+    NPCs.splice(murdererNumber, 1);
+    console.log(NPCs);  
+  
+    let victimNumber = Math.floor(Math.random() * (NPCs.length));
+    NPCs[victimNumber].alive = false;
+    console.log(`Oh no, ${NPCs[victimNumber].name} has died!`);
   };
+
 
   const generateSurvivorsHTML = () => {
     const list = [];
