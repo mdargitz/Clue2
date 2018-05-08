@@ -1,0 +1,16 @@
+
+INITIAL GAME PLAY
+User is able to create character and will be added to game play
+Computer randomly selects murderer that is not human player
+Computer randomly kills one NPC
+
+
+
+EACH TURN
+Computer randomly kills one character
+If user, game over.
+
+If not user, User has chance to guess
+If wrong, trigger a new turn
+
+If correct - do something

@@ -1,6 +1,6 @@
 /* global $ store*/
 'use strict';
-
+console.log('what up?');
 
 const game = (function(){
   
@@ -8,7 +8,43 @@ const game = (function(){
   
   const setMurderer = () => {
     //TODO make this random, give it some sort of logic based on prompts?
-    store.murderer = 'the butler'; //obviously
+   
+    let possibleMurderers = [];
+    let possibleVictims = [];
+    //get a random number
+
+    //loop over the characterObjs. If property NPC = true, push to array PotentialMurderers;
+    //Set property murderer = true for nth character in array as chosen randomly & potentialVictim to false
+
+    store.allPlayers.forEach( player => {
+      // console.log(player);
+      if (player.npc === true){
+        possibleMurderers.push(player);
+      }
+    });
+
+    console.log(possibleMurderers);
+
+ 
+    let murdererNumber = Math.floor(Math.random() * (possibleMurderers.length));
+
+console.log(murdererNumber);
+
+    possibleMurderers[murdererNumber].murderer = true;
+    console.log(`Shhh...${possibleMurderers[murdererNumber].name} is a murderer!`);
+    console.log(possibleMurderers);
+    // possibleMurderers[murdererNumber].potentialVictim = false;
+
+    // for (var obj in store.allPlayers) {
+    //   console.log( typeof obj, obj);
+    //   if (obj[npc] === true && this.potentialVictim === true){
+    //     possibleVictims.push(this);
+    //   }
+    // }
+
+    let victimNumber = Math.floor(Math.random() * (possibleVictims.length));
+    // possibleVictims[victimNumber].alive = false;
+    console.log(`Oh no, ${possibleVictims[victimNumber]} has died!`);
   };
 
   const generateSurvivorsHTML = () => {
@@ -52,7 +88,7 @@ const game = (function(){
   
   const render = ()=> {
     if(!store.beginning) {
-    //Hide beginning stuff
+      //Hide beginning stuff
       $('#charaForm').addClass('hidden');
     }
 
@@ -78,6 +114,8 @@ const game = (function(){
     $('#game').on('submit','#charaForm', ()=>{
       event.preventDefault();
       store.playerName = $('#characterName').val();
+      store.charaCreate($('#characterName').val());
+      console.log(store.characters);
       //TO DO get full NPC list from the API
       store.survivingCharas = ['joe','jane','the butler','fourth wall breaker?'];
       store.beginning = false;
