@@ -24,16 +24,23 @@ const game = (function(){
     NPCs[victimNumber].alive = false;
     store.deadPlayers.push(NPCs[victimNumber]);
     store.namesoftheDead = NPCs[victimNumber].name;
+
+    store.allPlayers.forEach(player => {
+      if(player.alive === true){
+        store.survivingCharas.push(player);
+        store.suspects.push(player);
+      }
+    });
     console.log(`Oh no, ${NPCs[victimNumber].name} has died!`);
   };
 
 
   const generateSurvivorsHTML = () => {
     const list = [];
-    for (let i = 0; i < store.survivingCharas.length ; i ++){
+    for (let i = 0; i < store.suspects.length ; i ++){
       list.push(`
-      <option value="${store.survivingCharas[i]}">
-      ${store.survivingCharas[i]}
+      <option value="${store.suspects[i]}">
+      ${store.suspects[i].name}
       </option>
       `);
     }
@@ -47,7 +54,6 @@ const game = (function(){
 
   const generatePrompt = (id) => {
     //get the prompt data from the api
-    console.log(store.namesoftheDead);
     const fakePromptData = `Once upon a time there was an app, in which ${store.namesoftheDead} died by murder!`;
     return `
     <div>

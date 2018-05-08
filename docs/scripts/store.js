@@ -15,6 +15,7 @@ const store = (function(){
       };
       console.log(humanPlayer);
        store.allPlayers.push(humanPlayer);
+       store.survivingCharas.push(humanPlayer);
     },
     allPlayers: [
       { name: 'butler',
@@ -45,6 +46,7 @@ const store = (function(){
     ],
     deadPlayers: [],
     namesoftheDead: '',
+    suspects: [],
 
   
 
