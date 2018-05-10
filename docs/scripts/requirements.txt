@@ -1,11 +1,11 @@
 NEEDED
-    - finish out workflow (what is our 'house style' for coding?)
-    - create models:  one schema "Players", includes NPCs and human player
+    - DONE finish out workflow (what is our 'house style' for coding?) 
+    - create models:  one schema "Players" and NPCs
         -create seed data
+    - create store
     - database setup: mLab.  
-    -API layer
     -backend
-    -front-end
+    -front-end (-API layer)
     - story
 
     STRETCH GOALS:
@@ -27,7 +27,7 @@ FIRST GAMEPLAY SCREEN
 Announce death of character;
 Selectable list of living NPCs to accuse
     ON SUBMIT
-        Query database to compare murder status, if true, YAY VICTORY
+        Query database to compare murderer status, if true, YAY VICTORY
             If false: select a random character where property alive is true and set to false.  Store name and announce new victim on next screen
 
 
@@ -45,4 +45,4 @@ If user, game over.
 If not user, User has chance to guess
 If wrong, trigger a new turn
 
-If correct - do something
+If correct - do something (VICTORY!)
