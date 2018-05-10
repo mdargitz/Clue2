@@ -7,10 +7,13 @@ NEEDED
     -backend
     -front-end (-API layer)
     - story
+    -front-end
+    - story (better repo name!)
 
     STRETCH GOALS:
         multiple users
         hints or clues after each murder
+        save game option
 
 
 User action => database query => results in store.js => new information displayed to user
@@ -27,7 +30,7 @@ FIRST GAMEPLAY SCREEN
 Announce death of character;
 Selectable list of living NPCs to accuse
     ON SUBMIT
-        Query database to compare murderer status, if true, YAY VICTORY
+        Check store to compare murder status, if true, YAY VICTORY
             If false: select a random character where property alive is true and set to false.  Store name and announce new victim on next screen
 
 
