@@ -19,7 +19,7 @@ const store = (function(){
     },
     allPlayers: [
       { name: 'butler',
-        murderer: false,
+        murderer: falw,
         alive: true,
         npc: true,
         potentialVictim: true,},

@@ -1,8 +1,30 @@
+NEEDED
+    - finish out workflow (what is our 'house style' for coding?)
+    - create models
+    - database setup: mLab.  Schemas. Seed data for NPCs.
+    -API layer
+    -backend
+
+w
+ON LOAD - welcome screen, user invited to input name and start game
+--- seed NPC data?
+- - - userName is captured and through a POST request sent to the database
+--- [GET/PUT] a random NPC document is drawn from the database and has "murderer" property set to "true" and potential victim property set to false (ref: https://www.mongodb.com/blog/post/how-to-perform-random-queries-on-mongodb)
+--- [GET/PUT] a random NPC is drawn and has alive property set to false and potential victim property set to false, store name
+--- send victim name to first game play screen and announce death, GET list of NPC players hwere alive === true
+
+FIRST GAMEPLAY SCREEN
+Announce death of character;
+Selectable list of living NPCs to accuse
+    ON SUBMIT
+        Query database to compare murder status, if true, YAY VICTORY
+            If false: select a random character where property alive is true and set to false.  Store name and announce new victim on next screen
+
 
 INITIAL GAME PLAY
-User is able to create character and will be added to game play
-Computer randomly selects murderer that is not human player
-Computer randomly kills one NPC
+ User is able to create character and will be added to game play
+DONE: Computer randomly selects murderer that is not human player
+DONE: Computer randomly kills one NPC
 
 
 
