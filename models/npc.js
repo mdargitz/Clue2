@@ -3,9 +3,10 @@
 const mongoose = require('mongoose');
 
 //properties of an NPC
+//First and Last name required, but does not need to be unique
 const npcSchema = mongoose.Schema({
-  name : {type: String, required: true},
-  inGame : {type: Boolean},
+  firstName : {type: String, required: true},
+  lastName : {type: String, required: true},
   isMurderer : {type: Boolean, default: false},
   isAlive : {type: Boolean, default: true},
   canDie : {type: Boolean, default: true}
