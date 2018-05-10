@@ -1,12 +1,12 @@
 NEEDED
     - finish out workflow (what is our 'house style' for coding?)
-    - create models:  one schema "Players", includes NPCs and human player
+    - create models:  one schema "Players", one schema 'NPCs' includes NPCs and human player
         -create seed data
     - database setup: mLab.  
     -API layer
     -backend
     -front-end
-    - story
+    - story (better repo name!)
 
     STRETCH GOALS:
         multiple users
