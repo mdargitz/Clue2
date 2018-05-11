@@ -1,10 +1,12 @@
 NEEDED
     - DONE finish out workflow (what is our 'house style' for coding?) 
-    - create models:  one schema "Players" and NPCs
-        -create seed data
+    - DONE (Marina) create models:  one schema "Players" and NPCs
+        -create seed data [NOTE: hey wait, this won't work until we have all our CRUD endpoints! - KRM]
     - create store
-    - database setup: mLab.  
+    - database setup: mLab. [NOTE: can wait until closer to deploy? - KRM]  
     -backend
+        - TODO: write basic error handler
+        - DONE (KRM): POST endpoint for Players router
     -front-end (-API layer)
     - story
     -front-end

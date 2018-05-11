@@ -8,17 +8,21 @@ const Player = require('../models/player');
 
 router.post('/', (req, res, next) => {
 
- const { name } = req.body;
+  const { name } = req.body;
   const newPlayer = {
     name,
     isAlive: true,
     won: 0
   };
 
- return Player.create(newPlayer)
+  return Player.create(newPlayer)
     .then ( (result) => {
-        return res.status(201).location(`/api/users/${result.id}`).json(result);
-    });
+      return res.status(201).location(`/api/users/${result.id}`).json(result);
+    })
+    .catch ( (err) => {
+      console.log(err);
+        
+    }    );
 });
 
 module.exports = router;
