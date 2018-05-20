@@ -2,14 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 
 const Npc = require('../models/npc');
 
 
 //GET all NPC's
 router.get('/', (req,res, next)=>{
-  Npc.find()
+  const filter = req.query;
+  Npc.find(filter)
     .then( results => {
       if(results) {
         return res.json(results);
@@ -18,7 +18,6 @@ router.get('/', (req,res, next)=>{
     })
     .catch(err => next(err));
 });
-
 
 //POST a new NPC (not used in app- for testing)
 router.post('/', (req, res, next)=>{
@@ -54,7 +53,8 @@ router.put('/random', (req, res, next)=>{
     .then(result => {
       return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
     })
-    .then(result => res.json(result));
+    .then(result => res.json(result))
+    .catch(err => next(err));
 
 });
 
