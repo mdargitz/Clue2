@@ -9,7 +9,15 @@ const Npc = require('../models/npc');
 
 //GET all NPC's
 router.get('/', (req,res, next)=>{
-  res.json({'test':'a thing'});
+  Npc.find()
+    .then( results => {
+      if(results) {
+        return res.json();
+      }
+      return next();
+    });
 });
+
+//POST a new NPC (not used in app- for testing)
 
 module.exports = router;
