@@ -1,16 +1,18 @@
-/* global $  api  */
 'use strict';
 
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const playersRouter = require('./routes/players');
+const npcsRouter = require('./routes/npcs');
 const { PORT, MONGODB_URI } = require('./config');
 
 
 app.use(express.static('public'));
 app.use(express.json());
+
 app.use('/api/players', playersRouter);
+app.use('/api/npcs', npcsRouter);
 
 
 
