@@ -19,6 +19,7 @@ router.get('/', (req,res, next)=>{
     .catch(err => next(err));
 });
 
+
 //POST a new NPC (not used in app- for testing)
 router.post('/', (req, res, next)=>{
   const newNpc = {firstName: req.body.firstName,
@@ -33,5 +34,29 @@ router.post('/', (req, res, next)=>{
     })
     .catch(err => next(err));
 });
+
+//PUT update a random NPC
+router.put('/random', (req, res, next)=>{
+  const updateableFields = ['isAlive', 'isMurderer'];
+  const updatedNpc = {};
+  updateableFields.map(field => {
+    if (field in req.body){
+      updatedNpc[field] = req.body[field];
+    }
+  });
+  Npc.find()
+    .then(results => {
+      return Math.floor(Math.random() * results.length);
+    })
+    .then(random => {
+      return Npc.find().limit(1).skip(random);
+    })
+    .then(result => {
+      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
+    })
+    .then(result => res.json(result));
+
+});
+
 
 module.exports = router;
