@@ -14,7 +14,16 @@ app.use(express.json());
 app.use('/api/players', playersRouter);
 app.use('/api/npcs', npcsRouter);
 
+//404 error
+app.use(function (req, res, next) {
+  res.status(404).send('Sorry can\'t find that!');
+});
 
+//Other Errors
+app.use(function (err, req, res, next) {
+  console.error(err);
+  res.status(500).send(err.message);
+});
 
 
 // Listen for incoming connections
