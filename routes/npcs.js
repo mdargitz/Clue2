@@ -62,6 +62,7 @@ router.put('/random', (req, res, next)=>{
   });
 
 
+  //KRM: this is the good stuff; restricts query to only kill nonmurderers
   let query;
   if('isAlive' in updatedNpc){
     query = {isMurderer: false};
