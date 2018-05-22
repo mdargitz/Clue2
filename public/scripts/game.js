@@ -1,15 +1,31 @@
-/* global $ store*/
+/* global api store*/
 'use strict';
 
 
 const game = (function(){
   
-
-  
-  const setMurderer = () => {
+  function setMurderer (query)  {
+    console.log('something is happening!', query)
     //TODO make this random, give it some sort of logic based on prompts?
-    store.murderer = 'the butler'; //obviously
-  };
+    // store.murderer = 'the butler'; //obviously
+    api.update('/api/npcs/random/', query)
+      .then(response => {
+        console.log(response);
+        if('isMurderer' in query){
+          console.log('making a murderer of', response.firstName);
+          store.murderer === response.firstName;
+        } else if('isAlive' in query){
+          console.log('choosing a victim', response.firstName);
+        }
+
+        store.murderer = response.firstName;
+
+        render();
+      })
+      .catch('i failed');
+  }
+
+
 
   const generateSurvivorsHTML = () => {
     const list = [];
@@ -77,7 +93,14 @@ const game = (function(){
   const handleCharacterSubmit = () => {
     $('#game').on('submit','#charaForm', ()=>{
       event.preventDefault();
-      store.playerName = $('#characterName').val();
+      game.setMurderer( {isMurderer:true});
+      game.setMurderer( {isAlive:false});
+      let playerName = $('#characterName').val();
+      api.create('/api/players', {name: playerName })
+        .then( response => store.playerName = response.name)
+        .next();
+
+      
       //TO DO get full NPC list from the API
       store.survivingCharas = ['joe','jane','the butler','fourth wall breaker?'];
       store.beginning = false;
@@ -92,10 +115,12 @@ const game = (function(){
       console.log(store.currentGuess);
       const win = evaluateGuess();
       store.win = win;
-      console.log(store.win);
+      // console.log(store.win);
       render();
     });
   };
+
+  
 
   return {
     handleCharacterSubmit,

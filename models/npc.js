@@ -11,7 +11,6 @@ const npcSchema = mongoose.Schema({
   isAlive: {type: Boolean, default: true},
 });
 
-
 //Forces "isMurderer:true" key-value pair to be unique
 npcSchema.index({isMurderer: 1}, {unique: true, partialFilterExpression: {isMurderer: true}});
 

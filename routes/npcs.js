@@ -53,6 +53,7 @@ router.post('/', (req, res, next)=>{
 
 //PUT update a random NPC
 router.put('/random', (req, res, next)=>{
+  console.log('welcome to random');
   const updateableFields = ['isAlive', 'isMurderer'];
   const updatedNpc = {};
   updateableFields.map(field => {
@@ -61,25 +62,22 @@ router.put('/random', (req, res, next)=>{
     }
   });
 
-
   //KRM: this is the good stuff; restricts query to only kill nonmurderers
   let query;
   if('isAlive' in updatedNpc){
     query = {isMurderer: false};
   }
 
-
-  console.log(query);
   Npc.find(query)
     .then(results => {
-      console.log(results);
+
       return Math.floor(Math.random() * results.length);
     })
     .then(random => {
-      return Npc.find().limit(1).skip(random);
+      return Npc.find(query).limit(1).skip(random);
     })
     .then(result => {
-      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
+      return Npc.findOneAndUpdate({_id : result[0].id}, updatedNpc, {new : true});
     })
     .then(result => res.json(result))
     .catch(err => next(err));
