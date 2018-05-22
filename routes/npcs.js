@@ -45,13 +45,13 @@ router.put('/random', (req, res, next)=>{
   });
   Npc.find()
     .then(results => {
-      return Math.floor(Math.random() * results.length);
+      return Math.floor(Math.random() * results.length); //count
     })
     .then(random => {
-      return Npc.find().limit(1).skip(random);
+      return Npc.find().limit(1).skip(random); //find a rando
     })
     .then(result => {
-      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
+      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true}); //update
     })
     .then(result => res.json(result))
     .catch(err => next(err));
