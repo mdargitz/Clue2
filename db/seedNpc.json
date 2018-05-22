@@ -1,19 +1,29 @@
 [ {
     "firstName": "Jeeves",
-    "lastName": "the Butler"
+    "lastName": "the Butler",
+    "isMurderer": true,
+    "isAlive": true,
+    "canDie": false
 },
 {
     "firstName": "Hercules",
-    "lastName": "Pouroo"
+    "lastName": "Pouroo",  
+    "isMurderer": false,
+    "isAlive": true,
+    "canDie": true
 },
 {
     "firstName": "Angela",
-    "lastName": "Seasbury"
-},{
+    "lastName": "Seasbury",  
+    "isMurderer": false,
+    "isAlive": true,
+    "canDie": true
+},
+{
     "firstName": "Patricia",
-    "lastName": "Murderino"
+    "lastName": "Murderino",  
+    "isMurderer": true,
+    "isAlive": true,
+    "canDie": false
 }
-
-
-
 ]
