@@ -9,6 +9,7 @@ const store = (function(){
     beginning: true,
     currentPrompt: 0,
     survivingCharas : [],
+    victims: [],
     win: false
   };
 }());

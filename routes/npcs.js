@@ -19,7 +19,7 @@ router.get('/', (req,res, next)=>{
     .catch(err => next(err));
 });
 
-//PUT a new NPC used for testing
+// PUT a new NPC used for testing
 // router.put('/:id', (req,res, next)=>{
 // const {id} = req.params;
 //   const updateableFields = ['isAlive', 'canDie','firstName', 'isMurderer'];
@@ -29,6 +29,12 @@ router.get('/', (req,res, next)=>{
 //       updatedNpc[field] = req.body[field];
 //     }
 //   });
+  
+//   let query;
+//   if('isAlive' in updatedNpc){
+//     query = {isMurderer: false};
+//   }
+
 //   Npc.findByIdAndUpdate(id, updatedNpc)
 //     .then(result => res.json(result))
 //     .catch(err => next(err));
@@ -70,16 +76,20 @@ router.put('/random', (req, res, next)=>{
 
   Npc.find(query)
     .then(results => {
-
+      console.log('list of options', results);
       return Math.floor(Math.random() * results.length);
     })
     .then(random => {
+
       return Npc.find(query).limit(1).skip(random);
     })
-    .then(result => {
+    .then(result => {      
       return Npc.findOneAndUpdate({_id : result[0].id}, updatedNpc, {new : true});
     })
-    .then(result => res.json(result))
+    .then(result => {
+      console.log('final choice', result);
+      return res.json(result);
+    } )
     .catch(err => next(err));
 
 });

@@ -2,34 +2,30 @@
 'use strict';
 
 
-const game = (function(){
-  
-  function setMurderer (query)  {
-    console.log('something is happening!', query)
+const game = (function () {
+
+  function setMurdererOrVictim(query) {
+    console.log('something is happening!', query);
     //TODO make this random, give it some sort of logic based on prompts?
     // store.murderer = 'the butler'; //obviously
-    api.update('/api/npcs/random/', query)
+    api.update('/api/npcs/random', query)
       .then(response => {
-        console.log(response);
-        if('isMurderer' in query){
+        if ('isMurderer' in query) {
           console.log('making a murderer of', response.firstName);
           store.murderer === response.firstName;
-        } else if('isAlive' in query){
+          return 'abc';
+        } else if ('isAlive' in query) {
           console.log('choosing a victim', response.firstName);
+          store.victims = response.firstName;
         }
-
-        store.murderer = response.firstName;
-
         render();
       })
       .catch('i failed');
   }
 
-
-
   const generateSurvivorsHTML = () => {
     const list = [];
-    for (let i = 0; i < store.survivingCharas.length ; i ++){
+    for (let i = 0; i < store.survivingCharas.length; i++) {
       list.push(`
       <option value="${store.survivingCharas[i]}">
       ${store.survivingCharas[i]}
@@ -59,72 +55,77 @@ const game = (function(){
     `;
   };
 
-  const evaluateGuess = ()=> {
-    if (store.murderer === store.currentGuess){
+  const evaluateGuess = () => {
+    if (store.murderer === store.currentGuess) {
       return true;
     }
     return false;
   };
-  
-  const render = ()=> {
-    if(!store.beginning) {
-    //Hide beginning stuff
+
+  const render = () => {
+    if (!store.beginning) {
+      //Hide beginning stuff
       $('#charaForm').addClass('hidden');
     }
 
     //hardcoded number of prompts for now- eventually should come from API
-    for (let i = 0; i < 3; i ++){
-      if (store.currentPrompt === i){
+    for (let i = 0; i < 3; i++) {
+      if (store.currentPrompt === i) {
         const prompt = generatePrompt(i);
         $('#gameBoard').html(prompt);
       }
-    } 
-    
-    if (store.win){
+    }
+
+    if (store.win) {
       $('#gameBoard').append('<p>You win!</p>');
     }
-    else if (store.currentGuess !== ''){
+    else if (store.currentGuess !== '') {
       $('#gameBoard').append('<p>Nope</p>');
     }
-    
-  };
-  
-  
-  const handleCharacterSubmit = () => {
-    $('#game').on('submit','#charaForm', ()=>{
-      event.preventDefault();
-      game.setMurderer( {isMurderer:true});
-      game.setMurderer( {isAlive:false});
-      let playerName = $('#characterName').val();
-      api.create('/api/players', {name: playerName })
-        .then( response => store.playerName = response.name)
-        .next();
 
-      
+  };
+
+
+  const handleCharacterSubmit = () => {
+    $('#game').on('submit', '#charaForm', () => {
+      event.preventDefault();
+
+      Promise.resolve(setMurdererOrVictim({ isMurderer: true }))
+        .then(() => setMurdererOrVictim({ isAlive: false }));
+    
+
+      let playerName = $('#characterName').val();
+      api.create('/api/players', { name: playerName })
+        .then(response => store.playerName = response.name);
+
+
+
       //TO DO get full NPC list from the API
-      store.survivingCharas = ['joe','jane','the butler','fourth wall breaker?'];
+      store.survivingCharas = ['joe', 'jane', 'the butler', 'fourth wall breaker?'];
       store.beginning = false;
       render();
     });
   };
 
   const handleAccuse = () => {
-    $('#game').on('submit', '#guessMurdererForm', ()=> {
+    $('#game').on('submit', '#guessMurdererForm', () => {
       event.preventDefault();
-      store.currentGuess = $('#guessMurderer').val();
-      console.log(store.currentGuess);
-      const win = evaluateGuess();
-      store.win = win;
+      setMurdererOrVictim({ isAlive: false });
+
+      // store.currentGuess = $('#guessMurderer').val();
+      // console.log(store.currentGuess);
+      // const win = evaluateGuess();
+      // store.win = win;
       // console.log(store.win);
       render();
     });
   };
 
-  
+
 
   return {
     handleCharacterSubmit,
     handleAccuse,
-    setMurderer
+    setMurdererOrVictim
   };
 }());
