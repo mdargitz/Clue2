@@ -7,10 +7,13 @@ const mongoose = require('mongoose');
 const npcSchema = mongoose.Schema({
   firstName : {type: String, required: true},
   lastName : {type: String, required: true},
-  isMurderer : {type: Boolean, default: false},
-  isAlive : {type: Boolean, default: true},
-  canDie : {type: Boolean, default: true}
+  isMurderer : {type: Boolean, default: false },
+  isAlive: {type: Boolean, default: true},
 });
+
+
+//Forces "isMurderer:true" key-value pair to be unique
+npcSchema.index({isMurderer: 1}, {unique: true, partialFilterExpression: {isMurderer: true}});
 
 //Prettify database returns
 npcSchema.set('toObject', {

@@ -19,6 +19,24 @@ router.get('/', (req,res, next)=>{
     .catch(err => next(err));
 });
 
+
+//PUT a new NPC used for testing
+// router.put('/:id', (req,res, next)=>{
+// const {id} = req.params;
+//   const updateableFields = ['isAlive', 'canDie','firstName', 'isMurderer'];
+//   const updatedNpc = {};
+//   updateableFields.map(field => {
+//     if (field in req.body){
+//       updatedNpc[field] = req.body[field];
+//     }
+//   });
+//   Npc.findByIdAndUpdate(id, updatedNpc)
+//     .then(result => res.json(result))
+//     .catch(err => next(err));
+
+// });
+
+
 //POST a new NPC (not used in app- for testing)
 router.post('/', (req, res, next)=>{
   const newNpc = {firstName: req.body.firstName,
@@ -43,6 +61,28 @@ router.put('/random', (req, res, next)=>{
       updatedNpc[field] = req.body[field];
     }
   });
+
+
+
+  //KRM: this is the good stuff; restricts query to only kill nonmurderers
+  let query;
+  if('isAlive' in updatedNpc){
+    query = {isMurderer: false};
+  }
+
+
+  console.log(query);
+  Npc.find(query)
+    .then(results => {
+      console.log(results);
+      return Math.floor(Math.random() * results.length);
+    })
+    .then(random => {
+      return Npc.find().limit(1).skip(random);
+    })
+    .then(result => {
+      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
+
   Npc.find()
     .then(results => {
       return Math.floor(Math.random() * results.length); //count
