@@ -8,19 +8,27 @@ const game = (function () {
     console.log('something is happening!', query);
     //TODO make this random, give it some sort of logic based on prompts?
     // store.murderer = 'the butler'; //obviously
-    api.update('/api/npcs/random', query)
-      .then(response => {
-        if ('isMurderer' in query) {
-          console.log('making a murderer of', response.firstName);
-          store.murderer === response.firstName;
-          return 'abc';
-        } else if ('isAlive' in query) {
-          console.log('choosing a victim', response.firstName);
-          store.victims = response.firstName;
-        }
-        render();
-      })
-      .catch('i failed');
+
+    const ourNewPromise = new Promise ( (resolve, reject) => {
+      api.update('/api/npcs/random', query)
+        .then(response => {
+          if ('isMurderer' in query) {
+            console.log('making a murderer of', response.firstName);
+            store.murderer = response.firstName;
+          } else if ('isAlive' in query) {
+            console.log('choosing a victim', response.firstName);
+            store.victims = response.firstName;
+        
+          }
+          Promise.resolve('foobar');
+        })
+        .catch('i failed');
+        
+
+    });
+
+    return ourNewPromise;
+
   }
 
   const generateSurvivorsHTML = () => {
@@ -86,12 +94,15 @@ const game = (function () {
   };
 
 
+
+
   const handleCharacterSubmit = () => {
     $('#game').on('submit', '#charaForm', () => {
       event.preventDefault();
 
-      Promise.resolve(setMurdererOrVictim({ isMurderer: true }))
-        .then(() => setMurdererOrVictim({ isAlive: false }));
+      setMurdererOrVictim({ isMurderer: true })
+        .then(
+          setMurdererOrVictim({ isAlive: false }));
     
 
       let playerName = $('#characterName').val();

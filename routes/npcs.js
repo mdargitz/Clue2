@@ -80,7 +80,6 @@ router.put('/random', (req, res, next)=>{
       return Math.floor(Math.random() * results.length);
     })
     .then(random => {
-
       return Npc.find(query).limit(1).skip(random);
     })
     .then(result => {      
