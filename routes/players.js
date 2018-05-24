@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
       return res.status(201).location(`/api/users/${result.id}`).json(result);
     })
     .catch ( (err) => {
-      console.log(err);
+      next(err);
         
     }    );
 });

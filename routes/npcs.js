@@ -19,6 +19,7 @@ router.get('/', (req,res, next)=>{
     .catch(err => next(err));
 });
 
+
 //PUT a new NPC used for testing
 // router.put('/:id', (req,res, next)=>{
 // const {id} = req.params;
@@ -62,6 +63,7 @@ router.put('/random', (req, res, next)=>{
   });
 
 
+
   //KRM: this is the good stuff; restricts query to only kill nonmurderers
   let query;
   if('isAlive' in updatedNpc){
@@ -80,6 +82,16 @@ router.put('/random', (req, res, next)=>{
     })
     .then(result => {
       return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true});
+
+  Npc.find()
+    .then(results => {
+      return Math.floor(Math.random() * results.length); //count
+    })
+    .then(random => {
+      return Npc.find().limit(1).skip(random); //find a rando
+    })
+    .then(result => {
+      return Npc.findOneAndUpdate({id : result.id}, updatedNpc, {new : true}); //update
     })
     .then(result => res.json(result))
     .catch(err => next(err));

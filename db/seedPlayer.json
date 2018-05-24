@@ -1,5 +1,17 @@
 [
     {
-        "name": "Sarah Smith"
+        "name": "Sarah Smith",
+        "isAlive": true,
+        "won" : false
+    },
+    {
+        "name": "Jane Doe",
+        "isAlive": false,
+        "won" : false
+    },
+    {
+        "name": "Joe Blou",
+        "isAlive": true,
+        "won" : true
     }
 ]
